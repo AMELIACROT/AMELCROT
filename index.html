@@ -367,7 +367,11 @@ function vipLogin(){
     let pass = prompt("Masukkan Password VIP");
 
     if(pass === "AMEL12"){
+
         setView("VIP");
+
+        document.getElementById("vipTelegram").style.display="block";
+
     }else{
         alert("Password Salah!");
     }
@@ -632,7 +636,7 @@ document.getElementById("pageNum").innerText=page+" / "+maxPage;
 }
 
 /* INIT */
-let websiteLocked = true; // false = buka, true = tutup
+let websiteLocked = false; // false = buka, true = tutup
 let maintenanceTime = "18:55";
 
 if (websiteLocked) {
@@ -676,5 +680,10 @@ function denySite(){
 document.body.innerHTML="<h1 style='color:red;text-align:center;margin-top:100px'>GAGAL AKSES</h1>";
 }
 </script>
+<div id="vipTelegram" style="display:none;padding:15px;text-align:center;">
+<button onclick="window.open('https://t.me/LINK_ROOM_TELEGRAM','_blank')">
+📢 JOIN TELEGRAM VIP
+</button>
+</div>
 </body>
 </html>
