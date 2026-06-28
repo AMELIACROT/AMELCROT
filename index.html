@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Amel crot</title>
+
+<style>
+.jalan{
+
+color:yellow;
+
+font-weight:bold;
+
+font-size:16px;
+
+}
+
+body{
+margin:0;
+background:#111;
+color:white;
+font-family:Arial;
+}
+
+
+#welcome{
+position:fixed;
+inset:0;
+background:#111;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+
+.iklanBox{
+position:relative;
+text-align:center;
+}
+
+
+.iklanBox img{
+width:200px;
+height:355px;
+object-fit:cover;
+}
+
+
+#x{
+position:absolute;
+right:0;
+top:0;
+background:red;
+color:white;
+}
+
+
+
+header{
+height:60px;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 10px;
+}
+
+
+.menu{
+cursor:pointer;
+}
+
+
+.menu span{
+display:block;
+width:25px;
+height:3px;
+background:white;
+margin:5px;
+}
+
+
+.logo{
+color:pink;
+font-size:22px;
+font-weight:bold;
+}
+
+
+input{
+width:100px;
+padding:8px;
+background:#222;
+color:white;
+border:0;
+border-radius:8px;
+}
+
+
+
+.sidebar{
+position:fixed;
+top:60px;
+left:-230px;
+width:230px;
+height:100%;
+background:#222;
+transition:.3s;
+z-index:10;
+}
+
+
+.sidebar.active{
+left:0;
+}
+
+
+.sidebar a{
+display:block;
+padding:15px;
+}
+
+
+
+
+.container{
+padding:10px;
+}
+
+
+
+#list{
+
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+
+}
+
+
+
+.card{
+
+background:#222;
+border-radius:10px;
+overflow:hidden;
+
+}
+
+
+
+.thumb{
+
+width:100%;
+height:130px;
+object-fit:cover;
+cursor:pointer;
+
+}
+
+
+
+.title{
+
+padding:10px;
+
+}
+
+
+
+#player{
+
+display:none;
+
+}
+
+
+
+.video{
+
+width:100%;
+aspect-ratio:16/9;
+
+}
+
+
+
+iframe{
+
+width:100%;
+height:100%;
+border:0;
+
+}
+
+
+
+button{
+
+background:pink;
+border:0;
+padding:10px;
+border-radius:8px;
+margin:3px;
+
+}
+
+
+
+.vote{
+
+display:inline-block;
+background:#222;
+padding:12px;
+border-radius:10px;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+
+<div id="welcome">
+
+<div class="iklanBox">
+
+
+<button id="x" onclick="tutupIklan()">X</button>
+
+
+<img src="iklan.png">
+
+
+<div id="welcomeText" style="display:none">
+
+
+<h1>Selamat datang di Amel crot💦</h1>
+
+
+<p>Apakah kamu umur 18 tahun ke atas?</p>
+
+
+<button onclick="umurYa()">YA</button>
+
+<button onclick="umurTidak()">TIDAK</button>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+<header>
+
+
+<div class="menu" onclick="menu()">
+
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+<div class="logo">
+Amel crot
+</div>
+
+
+
+<input id="searchInput"
+placeholder="Cari..."
+onkeyup="searchVideo()">
+
+
+
+<div id="clock"></div>
+
+
+</header>
+
+
+
+
+
+
+
+<div class="sidebar" id="side">
+
+
+<a onclick="kategori('HOME')">HOME</a>
+
+<a onclick="vip()">AMEL VIP</a>
+
+<a onclick="kategori('SMP')">SMP</a>
+
+<a onclick="kategori('SMA')">SMA</a>
+
+<a onclick="kategori('VIRAL')">VIRAL</a>
+
+<a onclick="kategori('TIKTOK')">TIKTOK</a>
+
+
+<a onclick="laporan()">LAPORAN</a>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="container">
+
+
+<div id="player">
+
+
+<button onclick="back()">Kembali</button>
+
+
+<div id="video" class="video"></div>
+
+
+<h3 id="judul"></h3>
+
+
+<div class="vote" onclick="like()">
+
+Like <span id="likes">0</span>
+
+</div>
+
+
+<div class="vote" onclick="dislike()">
+
+Dislike <span id="dislikes">0</span>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div id="home">
+
+<marquee class="jalan">
+📣Selamat datang di Amel crot, jika ada kerusakan mohon di laporkan, jika video bagus silahkan di like, 💸silahkan order Amel VIP agar tidak ketinggalan harga ya lagi promo Lo ayo buruan di beli
+</marquee>
+<h2 id="nama">
+HOME
+</h2>
+
+
+
+<div id="list"></div>
+
+
+<button onclick="prevVideo()">Prev</button>
+
+<button onclick="nextVideo()">Next</button>
+
+<button onclick="lastVideo()">Last</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+function tutupIklan(){
+
+x.style.display="none";
+
+document.querySelector(".iklanBox img").style.display="none";
+
+welcomeText.style.display="block";
+
+}
+
+
+
+function umurYa(){
+
+welcome.style.display="none";
+
+}
+
+
+
+
+function umurTidak(){
+
+welcome.innerHTML=
+"<h1>Website tidak bisa di akses karena dibawah umur</h1>";
+
+}
+
+
+
+
+
+function laporan(){
+
+let pesan =
+"Laporan video Min vidio ya ada yang rusak mohon di perbaiki";
+
+
+window.location.href =
+"https://t.me/amelcrot12?text="
++encodeURIComponent(pesan);
+
+}
+
+
+
+
+
+
+function jam(){
+
+let d=new Date();
+
+clock.innerHTML=
+d.getHours()+":"+
+String(d.getMinutes()).padStart(2,"0");
+
+}
+
+setInterval(jam,1000);
+
+jam();
+
+
+
+
+
+
+
+function menu(){
+
+side.classList.toggle("active");
+
+}
+
+
+
+
+document.addEventListener("click",function(e){
+
+if(
+!side.contains(e.target)
+&&
+!document.querySelector(".menu").contains(e.target)
+
+){
+
+side.classList.remove("active");
+
+}
+
+});
+
+
+
+
+
+
+
+function vip(){
+
+let p=prompt("Password AMEL VIP");
+
+
+if(p=="AMEL12"){
+
+kategori("AMEL VIP");
+
+}else{
+
+alert("Password salah");
+
+}
+
+}
+
+
+
+
+
+
+let videos=[
+
+
+{
+title:"AMEL",
+cat:["HOME","SMP"],
+thumb:"1.png",
+video:`<iframe src="LINK_LULU_STREAM"></iframe>`
+},
+
+
+{
+title:"RANI",
+cat:["HOME","SMA"],
+thumb:"2.png",
+video:`<iframe src="LINK_LULU_STREAM"></iframe>`
+},
+
+
+{
+title:"TOBRUT",
+cat:["HOME","VIRAL"],
+thumb:"3.png",
+video:`<iframe src="LINK_LULU_STREAM"></iframe>`
+}
+
+
+];
+
+
+
+
+
+let aktif="HOME";
+
+let halaman=0;
+
+let perPage=10
+
+let videoAktif=0;
+
+
+
+
+
+function tampil(){
+
+let html="";
+
+
+let data=aktif=="HOME"
+?videos
+:videos.filter(v=>v.cat.includes(aktif));
+
+
+data.forEach(v=>{
+
+
+html+=`
+
+<div class="card">
+
+
+<img class="thumb"
+src="${v.thumb}"
+onclick="play(${videos.indexOf(v)})">
+
+
+<div class="title">
+
+${v.title}
+
+</div>
+
+
+</div>
+
+`;
+
+});
+
+
+list.innerHTML=html;
+
+}
+
+
+
+
+
+function kategori(k){
+
+aktif=k;
+
+nama.innerHTML=k;
+
+tampil();
+
+}
+
+
+
+
+function play(i){
+
+videoAktif=i;
+
+
+home.style.display="none";
+
+player.style.display="block";
+
+
+video.innerHTML=videos[i].video;
+
+
+judul.innerHTML=videos[i].title;
+
+
+likes.innerHTML=localStorage.getItem("like"+i)||0;
+
+
+dislikes.innerHTML=localStorage.getItem("dislike"+i)||0;
+
+
+}
+
+
+
+
+
+function like(){
+
+if(localStorage.getItem("vote"+videoAktif))
+return;
+
+
+let n=Number(localStorage.getItem("like"+videoAktif)||0)+1;
+
+
+localStorage.setItem("like"+videoAktif,n);
+
+localStorage.setItem("vote"+videoAktif,"like");
+
+
+likes.innerHTML=n;
+
+}
+
+
+
+
+
+function dislike(){
+
+
+if(localStorage.getItem("vote"+videoAktif))
+return;
+
+
+let n=Number(localStorage.getItem("dislike"+videoAktif)||0)+1;
+
+
+localStorage.setItem("dislike"+videoAktif,n);
+
+
+localStorage.setItem("vote"+videoAktif,"dislike");
+
+
+dislikes.innerHTML=n;
+
+
+}
+
+
+
+
+
+function nextVideo(){
+
+if(videoAktif < videos.length-1){
+
+play(videoAktif+1);
+
+}
+
+}
+
+
+
+
+function prevVideo(){
+
+if(videoAktif > 0){
+
+play(videoAktif-1);
+
+}
+
+}
+
+
+
+
+function lastVideo(){
+
+play(videos.length-1);
+
+}
+
+
+
+
+
+
+function searchVideo(){
+
+let c=searchInput.value.toLowerCase();
+
+let html="";
+
+
+videos.forEach(v=>{
+
+
+if(v.title.toLowerCase().includes(c)){
+
+
+html+=`
+
+<div class="card">
+
+<img class="thumb"
+src="${v.thumb}"
+onclick="play(${videos.indexOf(v)})">
+
+<div class="title">${v.title}</div>
+
+
+</div>
+
+`;
+
+}
+
+});
+
+
+list.innerHTML=html;
+
+
+}
+
+
+
+
+
+
+function back(){
+
+player.style.display="none";
+
+home.style.display="block";
+
+video.innerHTML="";
+
+}
+
+
+
+
+tampil();
+
+
+</script>
+
+
+</body>
+</html>
